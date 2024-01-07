@@ -1,0 +1,27 @@
+<div class="container">
+  <div class="grid-wrapper">
+    <div *ngFor="let Review of reviews">
+      <div class="grid-item">
+        <img
+          id="image"
+          (click)="selectReview(Review.id)"
+          [src]="Review.imageUrl"
+          [title]="Review.productName"
+          [style.width.px]="imageWidth"
+          [style.hight.px]="imageHeight"
+          [style.margin.px]="imageMargin"
+        />
+        <div id="text" (click)="selectReview(Review.id)">
+          {{ Review.productName }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="review-container" *ngIf="showReview">
+    <button class="close" (click)="close()">&#x2715;</button>
+    <img id="review-image"
+      [src]="reviews[currentProduct].imageUrl"/>
+    <p class="review-title">{{reviews[currentProduct].productName}}</p>
+    {{ reviews[currentProduct].review }}
+  </div>
+</div>
