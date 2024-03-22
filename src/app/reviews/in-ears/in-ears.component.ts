@@ -1,79 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IReview } from '../../review';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-in-ears',
   templateUrl: './in-ears.component.html',
   styleUrl: './in-ears.component.css'
 })
-export class InEarsComponent {
+export class InEarsComponent implements OnInit{
+
+  public constructor(private http: HttpClient) {}
+  reviews: any;
+  ngOnInit(): void {
+    const url: string = '/assets/reviews.json';
+    this.http.get(url).subscribe((responce) => {
+      this.reviews = responce;
+      this.reviews = this.reviews.filter((review: IReview) => review.type == "in-ear");
+    })
+  }
+
   pageTitle = 'In-Ear Monitor Reviews';
   currentProduct: number = 0;
   imageWidth: number = 400;
   imageHeight: number = 300;
   imageMargin: number = 0;
   showReview: boolean = false;
-  reviews: IReview[] = [
-    {
-      "productName": "Shure SE846 Pro",
-      "review": "\tThe Shure SE846 Pro earphones are a pinnacle of audio engineering, delivering an unmatched listening experience that truly defines premium sound quality. From the moment you hold them, their robust build quality exudes durability and craftsmanship. These earphones are a statement piece for audiophiles seeking top-tier performance.\n\nWhat sets the SE846 Pro apart is its quad high-definition MicroDrivers, each meticulously tuned to reproduce sound with astonishing clarity and precision across the entire frequency range. The lows are rich and deep without overpowering, the mids are velvety smooth, and the highs are crystal clear, creating an immersive and balanced soundstage that reveals nuances in music you might have missed before.\n\nComfort is paramount during extended listening sessions, and Shure delivers on this front. The ergonomic design, coupled with various included ear tips and a detachable cable, ensures a snug fit and minimizes external noise, allowing you to delve deeply into your music without distractions. The detachable cables also enhance convenience and provide options for customization or replacement.\n\nWhile the SE846 Pro comes with a higher price tag, it's an investment in unparalleled sound quality and durability. These earphones redefine what’s possible in portable audio, making them a top choice for discerning listeners who demand nothing but the best. If you prioritize audio excellence and premium craftsmanship, the Shure SE846 Pro earphones are an exceptional choice that will elevate your listening experience to new heights.",
-      "id": 0,
-      "imageUrl": "assets/images/shure-se846-gen2-earphones-jade.jpg",
-      
-  },
-  {
-      "productName": "Audio Technica ATH-E70",
-      "review": "The Audio Technica ATH-E70 is a top-tier offering in the brand's renowned lineup of professional in-ear monitors. Designed with audio enthusiasts and musicians in mind, these earphones boast an impressive combination of audio fidelity, comfort, and durability.\n\nOne of the standout features of the ATH-E70 is its triple-driver design, incorporating three balanced armature drivers per earpiece. This configuration delivers an exceptional level of clarity across the frequency spectrum, providing rich lows, detailed mids, and crisp highs. The result is a well-balanced sound signature that caters to audiophiles and performers seeking accuracy and precision in their listening experience.\n\nComfort is paramount, especially for extended listening sessions or on-stage performances, and the ATH-E70 doesn't disappoint. With ergonomic housings and a selection of silicone and foam ear tips included in the package, users can find their ideal fit for optimal noise isolation and comfort. The over-ear design ensures a secure fit, making them suitable for active use without compromising on stability.\n\nDurability is another area where the ATH-E70 shines. Constructed with high-quality materials, these earphones are built to withstand the rigors of daily use, whether in the studio, on stage, or during regular commuting. The detachable cables add to their longevity, allowing for easy replacement if needed, minimizing downtime and extending the lifespan of the product. Overall, the Audio Technica ATH-E70 stands as a compelling choice for audio professionals and enthusiasts seeking exceptional sound quality, comfort, and durability in their in-ear monitors.",
-      "id": 1,
-      "imageUrl": "assets/images/Audio Technica ATH-E70.jpg",
-  },
-  {
-      "productName": "Sennheiser IE 40 Pro",
-      "review": "The Sennheiser IE 40 Pro earphones are an exceptional choice for audio professionals and enthusiasts seeking high-quality sound performance in an in-ear monitor (IEM) design. These earphones are engineered to deliver accurate and detailed sound reproduction, making them a standout option in the market.\n\nOne of the most impressive aspects of the IE 40 Pro is its sound signature. The earphones boast a clear and well-balanced sound profile, with precise mids and highs that shine across various genres of music. The bass response is tight and controlled, offering a punchy yet controlled low-end without overpowering the rest of the frequencies. Whether you're a musician looking for accurate monitoring or an audiophile seeking an immersive listening experience, the IE 40 Pro delivers on its promise of exceptional sound quality.\n\nComfort is key when it comes to in-ear monitors, and the Sennheiser IE 40 Pro excels in this department. With a sleek and ergonomic design, these earphones fit comfortably for extended listening sessions. The included multiple ear tip options ensure a secure and personalized fit, allowing users to find the ideal seal for noise isolation and optimal sound performance.\n\nDurability and build quality are also noteworthy features of the IE 40 Pro. Constructed with robust materials, these earphones are built to withstand the rigors of daily use and on-stage performances. The detachable cable adds convenience and extends the lifespan of the product, allowing for easy replacement if needed. Overall, the Sennheiser IE 40 Pro stands out as a reliable and high-performing choice for those who prioritize superior audio quality, comfort, and durability in their earphones.",
-      "id": 2,
-      "imageUrl": "assets/images/Sennheiser IE 40 Pro.jpg",
-  },
-  {
-      "productName": "Shure SE215 Pro",
-      "review": "The Shure SE215 Pro earphones are a stellar choice for audiophiles and music enthusiasts seeking exceptional sound quality and comfort. Boasting an impressive sound signature and a sleek design, these in-ear monitors deliver a listening experience that surpasses many others in their price range.\n\nOne of the standout features of the SE215 Pro is its sound quality. The dynamic microdrivers produce clear, detailed sound with deep, punchy bass and crisp highs. Whether you're listening to rock, classical, hip-hop, or electronic music, the SE215 Pro provides a balanced and immersive soundstage that truly elevates the listening experience. Additionally, the noise isolation is top-notch, effectively blocking out ambient noise without compromising the audio quality.\n\nComfort is another area where the Shure SE215 Pro excels. The lightweight design and ergonomic shape of the earpieces make them comfortable for extended listening sessions. Moreover, the over-ear configuration with detachable cables ensures a secure fit, making them suitable for use during workouts or while on the move. The inclusion of multiple ear tips allows users to find the perfect fit for their ears, enhancing both comfort and sound isolation.\n\nOverall, the Shure SE215 Pro earphones offer fantastic value for their price, providing exceptional sound quality, comfort, and durability. Whether you're a music enthusiast or a professional looking for reliable in-ear monitors, the SE215 Pro is a solid choice that delivers impressive audio performance and comfort, making it a worthwhile investment for anyone seeking an immersive listening experience.",
-      "id": 3,
-      "imageUrl": "assets/images/Shure SE215 Pro.jpg",
-  },
-  {
-      "productName": "Westone Mach 60",
-      "review": "The Westone Mach 60 is a high-end, in-ear monitor (IEM) that promises exceptional audio quality and comfort for professionals and audiophiles alike. Crafted with precision and engineered for top-notch sound reproduction, these IEMs come packed with features that cater to discerning users looking for unparalleled audio fidelity.\n\nOne of the standout features of the Mach 60 is its six-driver balanced armature configuration. This setup delivers an impressive range of frequencies, ensuring a well-balanced sound signature with rich lows, detailed mids, and sparkling highs. The drivers are finely tuned to provide clarity across the spectrum, making them ideal for critical listening, studio monitoring, or immersive music enjoyment.\n\nComfort is a top priority with the Mach 60. The ergonomic design and lightweight construction contribute to a snug and secure fit, allowing for extended listening sessions without discomfort. Moreover, the package includes various ear tips and customization options, ensuring a personalized fit that effectively isolates external noise, enhancing the overall listening experience. The detachable MMCX cable adds convenience and durability, allowing for easy replacement or customization as per the user's preferences.\n\nIn terms of build quality, the Westone Mach 60 showcases excellent craftsmanship. The robust construction ensures durability, making these IEMs suitable for on-the-go use or stage performances. While the price point may be a bit steep for casual users, the Mach 60's performance and quality justify the investment for audiophiles, musicians, and sound professionals seeking top-tier audio accuracy and comfort in an in-ear monitor.",
-      "id": 4,
-      "imageUrl": "assets/images/Westone Mach 60.jpg",
-  },
-  {
-      "productName": "Tin Audio T2",
-      "review": "The Tin Audio T2 earphones have generated significant buzz in the audio community for their exceptional sound quality at an affordable price point. These in-ear monitors boast a balanced armature driver setup, delivering a remarkable audio experience that punches well above its weight. The T2s are revered for their clarity, detail retrieval, and precise sound signature, making them an appealing choice for audiophiles and casual listeners alike.\n\nOne standout feature of the Tin Audio T2 is its neutral sound profile, which offers a balanced representation across the frequency spectrum. The mids are articulate and well-defined, presenting vocals and instruments with impressive clarity and accuracy. The highs are crisp and detailed without being harsh, contributing to an immersive listening experience that reveals nuances in your favorite tracks.\n\nMoreover, the build quality of the Tin Audio T2 is commendable. The earpieces are constructed from sturdy metal housings that exude durability, ensuring longevity even with regular use. Additionally, the detachable MMCX connectors add convenience and versatility, allowing for cable upgrades or replacements, which can further enhance the overall listening experience.\n\nIn conclusion, the Tin Audio T2 earphones stand out as an excellent choice for those seeking exceptional sound quality without breaking the bank. With its neutral and detailed sound signature, durable build, and upgradeable cables, these earphones offer an impressive value proposition that competes favorably with higher-priced options in the market. Whether you're a discerning audiophile or a casual music enthusiast, the Tin Audio T2s are well worth considering for an immersive and enjoyable listening experience.",
-      "id": 5,
-      "imageUrl": "assets/images/tin-hifi-t2-and-t2-pro.jpg",
-  },
-  {
-    "productName": "Final E500",
-    "review": "The Final E500 earphones have certainly made a strong impression with their combination of sleek design and impressive audio performance. The first thing that catches your eye is the elegant and minimalistic design of the earpieces. Crafted with precision and attention to detail, the Final E500 exudes a premium feel that matches its performance capabilities. The lightweight yet durable construction ensures comfort during prolonged use, making them a practical choice for everyday use.\n\nOne of the standout features of the Final E500 is the exceptional sound quality it delivers. The earphones boast a well-balanced sound signature that caters to a wide range of music genres. The bass response is punchy without overshadowing the mids and highs, allowing for a rich and immersive listening experience. Whether you're into bass-heavy tracks or intricate acoustic melodies, the Final E500 performs admirably across the board. The sound isolation is also noteworthy, providing an immersive audio environment by effectively minimizing ambient noise.\n\nThe Final E500 doesn't just prioritize audio quality; it also shines in terms of practicality and convenience. The inclusion of a tangle-free cable enhances the overall user experience, ensuring hassle-free storage and usage. The in-line remote and microphone add an extra layer of functionality, allowing users to effortlessly control music playback and take calls without removing the earphones. This attention to user-friendly features enhances the overall appeal of the Final E500 for those seeking a versatile and reliable audio companion.\n\nIn conclusion, the Final E500 earphones offer a compelling package for audio enthusiasts and everyday users alike. With a winning combination of sophisticated design, exceptional sound quality, and practical features, these earphones stand out in a competitive market. Whether you're a discerning audiophile or someone who simply appreciates a reliable and stylish audio accessory, the Final E500 is undoubtedly worth considering for its impressive performance and overall value.",
-    "id": 6,
-    "imageUrl": "assets/images/Final E500.png",
-  },
-  {
-    "productName": "Campfire Audio Holocene",
-    "review": "The Campfire Audio Holocene is a true testament to the brand's commitment to delivering audiophile-grade earphones that not only excel in sound quality but also boast a striking design. Right out of the box, the meticulous craftsmanship is evident, with the earpieces featuring a unique translucent shell that showcases the intricate inner workings. The attention to detail extends to the MMCX connectors, ensuring a secure and reliable connection for uninterrupted listening sessions.\n\nWhen it comes to sound performance, the Holocene truly shines. The combination of a single 10mm dynamic driver and Campfire Audio's signature Tuned Acoustic Expansion Chamber (T.A.E.C.) technology results in a sonic experience that is both immersive and detailed. The low frequencies are deep and impactful, providing a rich foundation for various genres. The midrange is clear and articulate, allowing vocals and instrumentals to shine, while the high frequencies exhibit a crispness that adds a layer of excitement to the overall sound signature.\n\nComfort is another area where the Holocene excels. The ergonomic design of the earpieces, combined with the selection of high-quality materials, ensures a snug fit that remains comfortable even during extended listening sessions. The included selection of ear tips caters to different preferences, allowing users to customize their fit for optimal isolation and comfort. Whether you're on a long flight or a daily commute, the Holocene remains a pleasure to wear.\n\nIn terms of build quality and durability, Campfire Audio once again delivers a product that stands the test of time. The premium materials used in the construction, such as the precision-machined aluminum shell, not only contribute to the earphones' aesthetics but also ensure longevity. The detachable cable adds a layer of convenience, and the included carrying case offers protection during transport. Overall, the Campfire Audio Holocene is a top-tier choice for audio enthusiasts who demand uncompromising sound quality, exquisite design, and enduring build craftsmanship.",
-    "id": 7,
-    "imageUrl": "assets/images/Campfire Audio Holocene.png",
-  },
-  {
-    "productName": "Westone Mach 70",
-    "review": "The Westone Mach 70 is a true testament to the brand's commitment to delivering top-notch audio experiences. From the moment you lay eyes on these premium in-ear monitors, it's evident that Westone has spared no expense in both design and craftsmanship. The sleek, low-profile design not only looks impressive but also contributes to a comfortable and secure fit, making them an excellent choice for long listening sessions or professional use on stage.\n\nWhen it comes to sound quality, the Mach 70 truly shines. The combination of seven balanced armature drivers per earpiece delivers a rich and detailed audio experience that audiophiles and musicians will appreciate. The clarity across the entire frequency spectrum is remarkable, with deep, punchy bass, clear midranges, and crisp highs. Whether you're a music enthusiast, a studio professional, or a performing artist, the Mach 70's audio performance stands out, providing an immersive and accurate representation of your favorite tracks.\n\nOne standout feature of the Westone Mach 70 is its robust and durable build. Constructed with high-quality materials, these in-ear monitors feel like they can withstand the rigors of daily use and the demands of live performances. The detachable MMCX cable adds to the convenience, allowing for easy replacement or customization. Additionally, the included accessories, such as a variety of ear tips and a protective case, enhance the overall user experience, demonstrating Westone's attention to detail.\n\nIn conclusion, the Westone Mach 70 is a premium option for those who demand the best in audio quality, comfort, and durability. While the price point may be higher than some alternatives on the market, the investment is justified by the exceptional craftsmanship and outstanding sonic performance. Whether you're a discerning audiophile or a professional musician, the Westone Mach 70 is a solid choice that delivers a listening experience that is nothing short of extraordinary.",
-    "id": 8,
-    "imageUrl": "assets/images/Westone Mach 70.jpg",
-  },
-  ];
 
   selectReview(id: number): void {
     console.log(id);
-    this.currentProduct = id;
+    this.currentProduct = this.reviews.indexOf(this.reviews.find((i: { id: number; }) => i.id == id));
+    console.log(this.currentProduct);
     this.showReview = true;
   }
 

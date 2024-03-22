@@ -10,6 +10,7 @@ import { InEarsComponent } from './reviews/in-ears/in-ears.component';
 import { WirelessComponent } from './reviews/wireless/wireless.component';
 import { VideosComponent } from './reviews/videos/videos.component';
 import { AboutComponent } from './reviews/about/about.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,6 +24,7 @@ import { AboutComponent } from './reviews/about/about.component';
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot([
       {path: 'home', component: ReviewComponent},
       {path: 'headphones', component: HeadphonesComponent},

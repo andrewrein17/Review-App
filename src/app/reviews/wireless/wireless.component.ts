@@ -1,84 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IReview } from '../../review';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-wireless',
   templateUrl: './wireless.component.html',
-  styleUrl: './wireless.component.css'
+  styleUrl: './wireless.component.css',
 })
-export class WirelessComponent {
+export class WirelessComponent implements OnInit {
+  public constructor(private http: HttpClient) {}
+  reviews: any;
+  ngOnInit(): void {
+    const url: string = '/assets/reviews.json';
+    this.http.get(url).subscribe((responce) => {
+      this.reviews = responce;
+      this.reviews = this.reviews.filter(
+        (review: IReview) => review.type == 'wireless'
+      );
+    });
+  }
+
   pageTitle = 'Wireless Reviews';
   currentProduct: number = 0;
   imageWidth: number = 400;
   imageHeight: number = 300;
   imageMargin: number = 0;
   showReview: boolean = false;
-  reviews: IReview[] = [
-    {
-      "productName": "Sony WH-1000XM5",
-      "review": "The Sony WH-1000XM5 headphones represent a pinnacle in the realm of premium wireless audio, seamlessly blending cutting-edge technology with sophisticated design. These over-ear headphones continue Sony's legacy of delivering top-notch sound quality, comfort, and innovative features.\n\nFirst and foremost, the sound quality of the WH-1000XM5 is nothing short of exceptional. Powered by Sony's proprietary HD Noise Cancelling Processor QN1, these headphones immerse listeners in rich, detailed sound across various music genres. The adaptive sound control intelligently adjusts ambient sound settings based on individual preferences and locations, ensuring an optimized listening experience.\n\nComfort is a priority with the WH-1000XM5. The plush ear cups and lightweight build make for extended listening sessions without discomfort. The adjustable headband provides a secure fit while maintaining a sleek and modern aesthetic. Additionally, the touch-sensitive controls on the ear cups offer intuitive and effortless navigation through tracks, volume adjustments, and call management.\n\nSony's attention to detail extends beyond comfort and sound quality. The battery life of up to 30 hours on a single charge ensures uninterrupted enjoyment throughout the day. Quick charging capabilities also provide five hours of playback with just a 10-minute charge, ideal for those on the move.\n\nThe integration of advanced features elevates the WH-1000XM5 to a class of its own. The Speak-to-Chat feature pauses music and activates ambient sound by detecting when the user starts speaking, allowing for seamless conversations without removing the headphones. Additionally, the headphones support high-resolution audio codecs, offering audiophiles the opportunity to experience music in its purest form.\n\nThe Sony WH-1000XM5 headphones are accompanied by the user-friendly Sony Headphones Connect app, enabling customization of sound settings, adaptive noise cancellation, and access to firmware updates, enhancing the overall user experience.\n\nIn conclusion, the Sony WH-1000XM5 headphones stand as a testament to Sony's dedication to craftsmanship and innovation in the realm of premium audio. With exceptional sound quality, comfort, and a suite of intelligent features, these headphones set a high standard for wireless audio, making them an excellent choice for discerning audiophiles and everyday music enthusiasts alike.",
-      "id": 0,
-      "imageUrl": "assets/images/sony-wh-1000xm5-16-1652338654416.jpg",
-        
-    },
-    {
-      "productName": "Apple AirPods Max",
-      "review" : "The Apple AirPods Max have redefined the premium headphone experience with their sleek design, impressive audio quality, and advanced features. These over-ear headphones boast a seamless integration of cutting-edge technology and luxurious aesthetics, catering to discerning audiophiles and tech enthusiasts alike.\n\nDesign-wise, the AirPods Max exude elegance and sophistication. The stainless steel frame coupled with breathable knit mesh canopy and memory foam ear cushions not only provide durability but also ensure a comfortable fit for extended usage. The innovative telescoping arms and uniquely designed ear cups offer an ergonomic feel, making them suitable for various head shapes and sizes.Sound quality is where the AirPods Max truly shine. \n\nEquipped with custom-built drivers and computational audio, these headphones deliver a rich, detailed sound profile across the entire frequency spectrum. The adaptive EQ adjusts the sound in real-time, ensuring a balanced and immersive listening experience. Whether you're indulging in music, movies, or calls, the spatial audio feature creates a surround sound effect that elevates the overall audio immersion.Apple's H1 chips power the AirPods Max, enabling seamless connectivity with Apple devices. \n\nThe integration of features like Spatial Audio, Active Noise Cancellation, and Transparency mode enhances versatility, allowing users to switch between an immersive audio experience and staying aware of their surroundings effortlessly.The battery life of up to 20 hours with Active Noise Cancellation and spatial audio enabled is impressive, ensuring prolonged usage without frequent recharging. \n\nThe included Smart Case puts the headphones in an ultra-low-power state to preserve battery life when not in use, although some users have found its protective capabilities to be limited.While the audio quality and design of the AirPods Max are undeniably top-notch, the premium price tag may be a deterrent for some. Additionally, the lack of a 3.5mm audio jack or a wired option might limit compatibility with non-Bluetooth devices, which could be a drawback for users preferring wired connections.\n\nIn summary, the Apple AirPods Max offer an unparalleled combination of premium design, exceptional sound quality, and seamless integration within the Apple ecosystem. Despite the premium price, these headphones cater to those who value superior audio performance, cutting-edge technology, and an unmatched user experience.",
-      "id": 1,
-      "imageUrl": "assets/images/X1008617-scaled.jpg",
-    },
-    {
-      "productName": "Bose QuietComfort Ultra",
-      "review" : "The Bose QuietComfort Ultra headphones have continued Bose's legacy of delivering premium audio experiences with exceptional noise-canceling capabilities. As soon as you slip these over-ear headphones on, you're greeted with a sense of serene isolation from the outside world. The active noise cancellation technology impressively drowns out ambient sounds, allowing you to immerse yourself fully in your music, podcasts, or calls without any distractions.\n\nOne of the standout features of the QuietComfort Ultra is their comfort. Bose has meticulously engineered these headphones with plush ear cushions and a lightweight design, making them suitable for extended wear without causing any discomfort or fatigue. Whether you're on a long flight, in a bustling office, or just seeking solace in a noisy environment, these headphones excel in providing a comfortable listening experience.\n\nThe audio quality is where Bose truly shines. The sound profile is well-balanced, offering crisp highs, rich mids, and deep, powerful lows. Whether you prefer the punchy beats of your favorite tracks or the subtle nuances in classical music, these headphones deliver a high-fidelity audio experience that will please even the most discerning audiophiles.\n\nMoreover, the battery life on the QuietComfort Ultra is impressive, providing extended playtime on a single charge. The intuitive controls and the Bose Connect app further enhance the user experience, allowing for easy customization of settings and seamless connectivity with multiple devices.\n\nWhile the Bose QuietComfort Ultra headphones come with a premium price tag, they undoubtedly deliver exceptional performance, comfort, and noise-canceling capabilities that make them a worthwhile investment for anyone seeking top-notch audio quality and peace from the surrounding environment.",
-      "id": 2,
-      "imageUrl": "assets/images/Bose-QuietComfort-Ultra.jpg",
-    },
-    {
-      "productName": "Sennheiser MOMENTUM 4",
-      "review" : "The Sennheiser MOMENTUM 4 Wireless headphones are a testament to the brand's commitment to impeccable sound quality and premium design. With a blend of cutting-edge technology and sophisticated aesthetics, these headphones cater to audiophiles and fashion-conscious users alike.\n\nOne of the standout features of the MOMENTUM 4 Wireless is the audio performance. Powered by Sennheiser's renowned audio engineering, these headphones deliver an immersive and balanced sound signature. The rich, detailed soundstage is complemented by deep bass and crisp highs, offering a listening experience that is both precise and vibrant across various music genres.\n\nComfort is another area where the MOMENTUM 4 excels. The ear cups, crafted from luxurious materials like genuine leather and soft padding, provide excellent comfort even during extended listening sessions. The design is not just about comfort but also aesthetics the sleek, minimalist look combined with durable build quality exudes sophistication.\n\nThe active noise cancellation (ANC) on these headphones is impressive, effectively minimizing ambient noise without compromising audio quality. The transparency mode allows users to stay aware of their surroundings without taking the headphones off, adding to the versatility of these premium cans.\n\nThe integration of smart features such as touch controls, voice assistant support, and auto-pause/play functionality elevates the overall user experience. Additionally, the robust battery life of up to 17 hours with ANC enabled ensures prolonged usage without frequent recharging.\n\nWhile the Sennheiser MOMENTUM 4 Wireless headphones come at a premium price point, they deliver an exceptional blend of superior sound quality, comfort, and style. For those seeking top-tier wireless headphones that prioritize audio fidelity and craftsmanship, the MOMENTUM 4 Wireless stands as an enticing choice.",
-      "id": 3,
-      "imageUrl": "assets/images/Sennheiser-Momentum-4-Wireless-side-view.jpg",
-    },
-    {
-        "productName": "Samsung Galaxy Buds 2 Pro",
-        "review": "The Samsung Galaxy Buds 2 Pro are an impressive addition to Samsung's line of true wireless earbuds. With their sleek design and advanced features, these earbuds offer a compelling option for anyone in the market for high-quality audio and convenient functionality.\n\nSound quality is a standout feature of the Galaxy Buds 2 Pro. The earbuds deliver a balanced sound profile with rich bass, clear mids, and crisp highs, providing an immersive listening experience across various music genres. The active noise cancellation (ANC) technology effectively blocks out external noises, allowing users to enjoy their favorite tracks without distractions, whether in a bustling city or a noisy commute.\n\nAnother noteworthy aspect is the impressive battery life. The Galaxy Buds 2 Pro offer extended playtime, with the earbuds providing several hours of continuous listening on a single charge. The charging case further extends the battery life, offering additional charges to keep the music going throughout the day. Additionally, the quick-charging feature ensures that even a short charging session provides ample playback time, ideal for users on the move.\n\nThe integration with Samsung devices and the overall user experience are seamless. Pairing the earbuds with a Samsung smartphone is effortless, and users can benefit from additional functionalities and settings via the Galaxy Wearable app. Touch controls on the earbuds allow for easy navigation and management of music playback, calls, and activating ANC or ambient sound mode. Overall, the Samsung Galaxy Buds 2 Pro stand out as a compelling option for users seeking top-notch audio quality and convenient features in a pair of true wireless earbuds.",
-        "id": 4,
-        "imageUrl": "assets/images/Buds 2 Pro.jpg",
-    },
-    {
-      "productName": "Sony WH-CH520",
-      "review": "The Sony WH-CH520 wireless headphones offer an excellent blend of performance and convenience at an attractive price point. These headphones boast impressive sound quality, delivering crisp highs, well-defined mids, and a satisfying bass response that doesn't overpower the overall audio experience. Whether you're listening to music, watching movies, or taking calls, the WH-CH520 delivers a balanced and enjoyable sound signature across various genres.\n\nOne of the standout features of the WH-CH520 is its exceptional battery life. With up to 20 hours of playback on a single charge, these headphones ensure extended listening sessions without frequently needing to recharge. Additionally, the quick charge functionality provides an extra hour of playback with just a 10-minute charge, perfect for those on the go or in need of a quick power boost.\n\nThe design of the Sony WH-CH520 is sleek and minimalist, offering a lightweight build that's comfortable for extended wear. The ear cups swivel for easy storage and transportation, and the adjustable headband provides a secure fit. The onboard controls are intuitive and user-friendly, allowing seamless navigation between tracks, adjusting volume, and managing calls without reaching for your device.\n\nMoreover, the Bluetooth connectivity of the WH-CH520 ensures a stable and reliable connection, allowing users to move freely without worrying about signal drops. While these headphones may not have the most advanced noise-cancellation technology, they provide decent passive isolation, effectively reducing ambient noise for an immersive listening experience. Overall, the Sony WH-CH520 stands as a solid choice for budget-conscious consumers seeking reliable wireless headphones with commendable sound quality and battery life.",
-      "id": 5,
-      "imageUrl": "assets/images/Sony-WH-CH520-side-view.jpg",
-    },
-    {
-      "productName": "Final Audio UX3000",
-      "review": "The Final Audio UX3000 is a true testament to the brand's commitment to delivering top-notch audio quality and design excellence. From the moment you unbox this pair of earphones, it's evident that Final Audio has spared no expense in crafting a premium audio experience. The sleek and minimalist design of the UX3000 is not only visually appealing but also exudes a sense of sophistication, setting it apart in a market saturated with generic earphone designs.\n\nWhen it comes to audio performance, the UX3000 truly shines. The earphones boast a well-balanced sound signature, providing a rich and immersive listening experience across various genres. The clarity and precision in the midrange and high frequencies are particularly impressive, allowing users to pick up on subtle nuances in their favorite tracks. Bass enthusiasts will appreciate the controlled yet impactful low-end response, adding a layer of depth without overpowering the overall sound profile.\n\nComfort is a crucial factor in any pair of earphones, and the Final Audio UX3000 doesn't disappoint. The ear tips are made from high-quality materials, ensuring a snug fit that effectively isolates external noise. Whether you're commuting, working out, or simply relaxing at home, these earphones stay comfortably in place for extended listening sessions. Additionally, the lightweight design contributes to the overall comfort, making them suitable for all-day wear.\n\nIn terms of build quality, Final Audio has once again demonstrated their expertise. The UX3000 feels durable and robust, with attention to detail evident in every component. The cables are tangle-resistant, adding to the overall convenience for users on the go. While the price point may be higher than some competitors, the combination of premium materials, exceptional audio quality, and thoughtful design make the Final Audio UX3000 a worthy investment for audiophiles and music enthusiasts alike.",
-      "id": 6,
-      "imageUrl": "assets/images/Final Audio UX3000.jpg",
-    },
-    {
-      "productName": "Sony WF-1000XM5",
-      "review": "The Sony WF-1000XM5 stands out as an exceptional pair of true wireless earbuds, setting a new benchmark for premium audio quality and noise-canceling performance. From the moment you unbox these sleek earbuds, the craftsmanship is apparent. The matte finish and compact design exude sophistication, while the ergonomic shape ensures a comfortable fit for prolonged use. The inclusion of multiple ear tip sizes further enhances customization, catering to various ear shapes and sizes.\n\nWhen it comes to audio quality, the WF-1000XM5 doesn't disappoint. Sony's industry-leading noise-canceling technology provides an immersive listening experience by effectively blocking out external distractions. The 6mm drivers deliver rich and balanced sound across a wide frequency range. Whether you're into deep bass or crisp highs, these earbuds deliver a well-rounded audio profile that caters to audiophiles and casual listeners alike. The integration of LDAC technology ensures high-quality wireless audio streaming, maintaining fidelity even in crowded wireless environments.\n\nThe battery life of the Sony WF-1000XM5 is commendable, offering an impressive 8 hours of playback on a single charge, with an additional 16 hours provided by the compact charging case. Quick-charging capabilities mean you can get 90 minutes of playtime with just a 10-minute charge – perfect for those on the go. The touch-sensitive controls on each earbud provide intuitive navigation, allowing users to manage playback, adjust volume, and take calls with ease. Seamless integration with voice assistants like Google Assistant and Amazon Alexa adds an extra layer of convenience.\n\nIn terms of connectivity, the WF-1000XM5 excels with its stable Bluetooth connection and support for multi-device pairing. The Sony Headphones Connect app allows users to fine-tune their audio preferences, customize noise-canceling levels, and even adjust ambient sound settings. Overall, the Sony WF-1000XM5 earns its place as a top-tier true wireless earbud option, delivering an exceptional blend of premium design, cutting-edge technology, and superb audio performance.",
-      "id": 7,
-      "imageUrl": "assets/images/Sony WF-1000XM5.jpg",
-    },
-    {
-      "productName": "AirPods Pro 2",
-      "review": "The AirPods Pro 2 is a stellar addition to Apple's renowned lineup of wireless earbuds, combining cutting-edge technology with a sleek design for an immersive audio experience. One of the standout features is the active noise cancellation (ANC), which has been significantly improved from its predecessor. The AirPods Pro 2 effectively eliminates background noise, providing users with a truly immersive listening experience whether they're in a bustling city or a noisy commute.\n\nApple has continued to prioritize comfort, and the AirPods Pro 2 is no exception. The ear tips are customizable, allowing users to find the perfect fit for their ears. The ergonomic design ensures a snug and secure fit, making them ideal for extended use without discomfort. Whether you're working out, commuting, or simply relaxing, these earbuds stay securely in place, enhancing the overall user experience.\n\nAudio quality remains a strong suit for the AirPods Pro 2. The adaptive EQ technology automatically adjusts the sound based on the shape of the user's ear, delivering a rich and well-balanced audio profile. The bass is deep and impactful, while the mids and highs are clear and detailed. Whether you're into heavy bass beats or crisp vocals, the AirPods Pro 2 delivers a versatile and satisfying audio performance.\n\nThe integration of spatial audio adds another layer to the immersive experience. This feature provides a surround sound-like experience, making users feel like they're in the center of the action. Whether you're watching movies, playing games, or listening to music, spatial audio enhances the overall entertainment value of the AirPods Pro 2. With seamless connectivity to Apple devices and an impressive battery life, these earbuds continue to set the standard for premium wireless audio. Overall, the AirPods Pro 2 is a worthy investment for those seeking top-notch sound quality, comfort, and cutting-edge features in a compact and stylish package.",
-      "id": 8,
-      "imageUrl": "assets/images/AirPods Pro 2.jpg",
-    },
-  ];
 
-    selectReview(id: number): void {
-      console.log(id);
-      this.currentProduct = id;
-      this.showReview = true;
-    }  
+  selectReview(id: number): void {
+    console.log(id);
+    this.currentProduct = this.reviews.indexOf(
+      this.reviews.find((i: { id: number }) => i.id == id)
+    );
+    console.log(this.currentProduct);
+    this.showReview = true;
+  }
 
-    close(): void{
+  close(): void {
     this.showReview = false;
     console.log(this.showReview);
-    }
+  }
 }
